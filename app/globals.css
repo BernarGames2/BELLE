@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ameixa: #4a1f4e;
+  --ameixa-profundo: #2d1230;
+  --perola: #fffbf7;
+  --pessego: #ffb98e;
+  --grafite: #1e1a21;
+  --giz: #6f6672;
+  /* cor viva — recolorida pelo ColorProvider */
+  --cor-ju: #f26b5b;
+  --cor-ju-on: #1e1a21;
+  --cor-ju-ink: #b0473f;
+  --cor-ju-soft: #fde5df;
+  color-scheme: light;
+}
+
+html { background: var(--perola); color: var(--grafite); -webkit-text-size-adjust: 100%; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+body { background: var(--perola); overflow-x: hidden; }
+
+/* transição global da cor (0,8s) — desligada em reduced-motion */
+.recolore { transition: background-color .8s cubic-bezier(.16,1,.3,1), color .8s cubic-bezier(.16,1,.3,1), border-color .8s cubic-bezier(.16,1,.3,1), fill .8s, stroke .8s; }
+
+:focus-visible { outline: 3px solid var(--ameixa); outline-offset: 3px; border-radius: 6px; }
+
+.skip-link { position: absolute; left: 1rem; top: -4rem; z-index: 100; background: var(--ameixa); color: #fff; padding: .75rem 1rem; border-radius: 999px; }
+.skip-link:focus { top: 1rem; }
+
+/* TIPOGRAFIA ELÁSTICA — Bricolage com eixos wght/wdth */
+.elastica { font-variation-settings: "wght" 800, "wdth" 100; transition: font-variation-settings .6s cubic-bezier(.16,1,.3,1); }
+.elastica:hover, .elastica.esticada { font-variation-settings: "wght" 500, "wdth" 75; }
+.elastica-in { font-variation-settings: "wght" 300, "wdth" 75; }
+
+/* FORMAS ORGÂNICAS que respiram */
+@keyframes respira {
+  0%,100% { border-radius: 58% 42% 55% 45% / 46% 58% 42% 54%; }
+  50% { border-radius: 44% 56% 41% 59% / 57% 43% 57% 43%; }
+}
+.organica { border-radius: 58% 42% 55% 45% / 46% 58% 42% 54%; animation: respira 9s ease-in-out infinite; }
+.organica-2 { border-radius: 40% 60% 63% 37% / 52% 38% 62% 48%; animation: respira 11s ease-in-out infinite reverse; }
+
+/* Placeholder de foto com textura listrada */
+.foto-a-confirmar {
+  background: repeating-linear-gradient(135deg, var(--cor-ju-soft) 0 14px, #fff 14px 28px);
+}
+
+/* Chat: digitando… */
+@keyframes ponto { 0%,80%,100% { transform: translateY(0); opacity:.35 } 40% { transform: translateY(-4px); opacity:1 } }
+.digitando span { display:inline-block; width:7px; height:7px; border-radius:99px; background: var(--giz); animation: ponto 1.2s infinite; }
+.digitando span:nth-child(2){ animation-delay:.15s } .digitando span:nth-child(3){ animation-delay:.3s }
+
+/* Sem JS, todo balão aparece */
+html:not(.js) [data-oculto] { opacity: 1 !important; transform: none !important; }
+
+/* Desenho por stroke */
+.traco { stroke-dasharray: var(--len, 600); stroke-dashoffset: var(--len, 600); transition: stroke-dashoffset 1.6s cubic-bezier(.65,0,.35,1); }
+.traco.desenhado { stroke-dashoffset: 0; }
+
+/* Preloader */
+html.sem-preloader #preloader { display: none; }
+
+.scroll-x { scrollbar-width: none; } .scroll-x::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+  .traco { stroke-dashoffset: 0; }
+}
